@@ -4,7 +4,7 @@ ENV SBT_VERSION=1.1.0 \
     LANG=C.UTF-8
 
 # Install libs needed by CircleCI
-RUN apk add --no-cache --update bash git openssh tar zip xz bc
+RUN apk add --no-cache --update bash git openrc openssh tar zip xz bc docker
 
 # Install sbt
 RUN apk add --no-cache --virtual=build-dependencies curl && \
@@ -18,3 +18,6 @@ RUN apk add --no-cache --virtual=build-dependencies curl && \
 RUN apk --no-cache add py-pip groff less && \
     pip install --upgrade pip awsebcli && \
     rm -rf /tmp/* /root/.cache
+
+# Start the Docker daemon at boot
+RUN rc-update add docker boot
